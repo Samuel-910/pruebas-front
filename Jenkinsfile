@@ -41,7 +41,7 @@ pipeline {
             steps {
                 dir('capachica-app') {
                     withSonarQubeEnv('sonarqube') {
-                        sh 'sonar-scanner'
+                        sh 'npx sonar-scanner'
                     }
                 }
             }
