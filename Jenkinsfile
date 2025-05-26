@@ -26,18 +26,14 @@ pipeline {
             }
         }
 
-        stage('Unit tests') {
-            steps {
-                dir('capachica-app') {
-                    sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
-                }
-            }
-            post {
-                always {
-                    junit 'capachica-app/**/test-results/*.xml'
-                }
-            }
-        }
+		stage('Unit tests + Coverage') {
+		  steps {
+			dir('capachica-app') {
+			  sh 'npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage'
+			}
+		  }
+		}
+
 
         stage('Build') {
             steps {
@@ -50,7 +46,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 dir('capachica-app') {
-                    withSonarQubeEnv('MySonarQubeServer') {
+                    withSonarQubeEnv('sonarqube') {
                         sh 'sonar-scanner'
                     }
                 }
