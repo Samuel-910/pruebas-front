@@ -17,43 +17,48 @@ pipeline {
             }
         }
 
+        // A partir de aquí, entramos en capachica-app
         stage('Install dependencies') {
             steps {
-                sh 'npm ci'
+                dir('capachica-app') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Unit tests') {
             steps {
-                // Ajusta el comando a tu suite de tests Angular
-                sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
+                dir('capachica-app') {
+                    sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
+                }
             }
             post {
                 always {
-                    // Publica resultados de Jasmine/Karma
-                    junit '**/test-results/*.xml'
+                    junit 'capachica-app/**/test-results/*.xml'
                 }
             }
         }
 
         stage('Build') {
             steps {
-                sh 'npm run build -- --prod'
+                dir('capachica-app') {
+                    sh 'npm run build -- --prod'
+                }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    // Lanza el scanner que instalaste con el label 'sonarqube'
-                    sh 'sonar-scanner'
+                dir('capachica-app') {
+                    withSonarQubeEnv('MySonarQubeServer') {
+                        sh 'sonar-scanner'
+                    }
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                // Espera el resultado de SonarQube y aborta si falla el Quality Gate
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
@@ -62,14 +67,8 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Build y análisis completados correctamente.'
-        }
-        failure {
-            echo '❌ Falló el pipeline — revisa consola y SonarQube.'
-        }
-        always {
-            echo '🔚 Pipeline finalizado.'
-        }
+        success { echo '✅ ¡Todo verde!' }
+        failure { echo '🚨 Algo falló, échale un ojo.' }
+        always  { echo '🔚 Pipeline finalizado.' }
     }
 }
