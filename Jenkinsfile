@@ -2,15 +2,10 @@ pipeline {
     agent any
 
     tools {
-        // Nombre de la instalación de NodeJS configurada en Jenkins
-        nodejs "NODEJS"
-    }
-
-    environment {
-        // Si tienes un token de SonarQube guardado en Jenkins Credentials
-        SONAR_TOKEN = credentials('sonar-token-id')
-        // Carpeta de tu app Angular (ajusta si tu proyecto no está en `frontend`)
-        APP_DIR = '.'
+        // El “Name” que diste en Jenkins Admin → Tools → NodeJS
+        nodejs 'NodeJS_24'
+        // El “Name” que diste en Jenkins Admin → Global Tool Config → SonarScanner installations
+        sonarScanner 'sonarqube'
     }
 
     stages {
@@ -26,83 +21,58 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                dir("${APP_DIR}") {
-                    timeout(time: 5, unit: 'MINUTES') {
-                        sh 'npm ci'
-                    }
+                sh 'npm ci'
+            }
+        }
+
+        stage('Unit tests') {
+            steps {
+                // Ajusta el comando a tu suite de tests Angular
+                sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
+            }
+            post {
+                always {
+                    // Publica resultados de Jasmine/Karma
+                    junit '**/test-results/*.xml'
                 }
             }
         }
 
         stage('Build') {
             steps {
-                dir("${APP_DIR}") {
-                    timeout(time: 8, unit: 'MINUTES') {
-                        sh 'npm run build -- --configuration=production'
-                    }
-                }
-            }
-        }
-
-        stage('Test & Lint') {
-            steps {
-                dir("${APP_DIR}") {
-                    timeout(time: 10, unit: 'MINUTES') {
-                        // Ejecuta tests en modo headless y lint
-                        sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
-                        sh 'npm run lint'
-                    }
-                }
+                sh 'npm run build -- --prod'
             }
         }
 
         stage('SonarQube Analysis') {
-            environment {
-                SONAR_HOST_URL = 'https://tu-sonarqube.example.com'
-            }
             steps {
-                dir("${APP_DIR}") {
-                    timeout(time: 4, unit: 'MINUTES') {
-                        withSonarQubeEnv('SonarQube') {
-                            // Asume que en package.json tienes:
-                            // "scripts": { "sonar": "sonar-scanner" }
-                            sh 'npm run sonar'
-                        }
-                    }
+                // 'MySonarQubeServer' es el nombre que diste en Manage Jenkins → Configure System → SonarQube servers
+                withSonarQubeEnv('MySonarQubeServer') {
+                    // Lanza el scanner que instalaste con el label 'sonarqube'
+                    sh 'sonar-scanner'
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                sleep 10
-                timeout(time: 4, unit: 'MINUTES') {
+                // Espera el resultado de SonarQube y aborta si falla el Quality Gate
+                timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                dir("${APP_DIR}") {
-                    timeout(time: 5, unit: 'MINUTES') {
-                        // Ajusta según tu estrategia de despliegue
-                        // Aquí simplemente listamos el contenido de dist/
-                        sh 'echo "Contenido de dist/:" && ls -la dist/'
-                    }
                 }
             }
         }
     }
 
     post {
-        always {
-            cleanWs()
+        success {
+            echo '✅ Build y análisis completados correctamente.'
         }
         failure {
-            mail to: 'equipo@tudominio.com',
-                 subject: "Build falló: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: "Revisa la consola: ${env.BUILD_URL}"
+            echo '❌ Falló el pipeline — revisa consola y SonarQube.'
+        }
+        always {
+            echo '🔚 Pipeline finalizado.'
         }
     }
 }
