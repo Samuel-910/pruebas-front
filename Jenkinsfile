@@ -41,7 +41,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 dir('capachica-app') {
-				    timeout(time: 4, unit: 'MINUTES'){
+				    timeout(time: 10, unit: 'MINUTES'){
 						withSonarQubeEnv('sonarqube') {
 							sh 'npx sonar-scanner'
 						}
