@@ -32,7 +32,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('capachica-app') {
-                    sh 'npm run build -- --prod'
+                    sh 'npm run build'
                 }
             }
         }
