@@ -4,8 +4,6 @@ pipeline {
     tools {
         // El “Name” que diste en Jenkins Admin → Tools → NodeJS
         nodejs 'NodeJS_24'
-        // El “Name” que diste en Jenkins Admin → Global Tool Config → SonarScanner installations
-        sonarScanner 'sonarqube'
     }
 
     stages {
@@ -46,8 +44,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                // 'MySonarQubeServer' es el nombre que diste en Manage Jenkins → Configure System → SonarQube servers
-                withSonarQubeEnv('MySonarQubeServer') {
+                withSonarQubeEnv('sonarqube') {
                     // Lanza el scanner que instalaste con el label 'sonarqube'
                     sh 'sonar-scanner'
                 }
