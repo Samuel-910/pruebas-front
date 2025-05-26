@@ -32,6 +32,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('capachica-app') {
+				
                     sh 'npm run build'
                 }
             }
@@ -40,9 +41,11 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 dir('capachica-app') {
-                    withSonarQubeEnv('sonarqube') {
-                        sh 'npx sonar-scanner'
-                    }
+				    timeout(time: 4, unit: 'MINUTES'){
+						withSonarQubeEnv('sonarqube') {
+							sh 'npx sonar-scanner'
+						}
+					}
                 }
             }
         }
