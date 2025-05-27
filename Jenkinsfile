@@ -26,7 +26,13 @@ pipeline {
             }
         }
 
-
+		stage('Unit tests + Coverage') {
+		  steps {
+			dir('capachica-app') {
+			  sh 'npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage'
+			}
+		  }
+		}
 
 
         stage('Build') {
