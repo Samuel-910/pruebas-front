@@ -1,0 +1,594 @@
+<!-- Partículas flotantes decorativas -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+  <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-orange-400 rounded-full animate-ping opacity-70"></div>
+  <div class="absolute top-1/3 right-1/4 w-3 h-3 bg-yellow-400 rounded-full animate-pulse opacity-60"></div>
+  <div class="absolute bottom-1/4 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce opacity-80"></div>
+  <div class="absolute top-1/2 right-1/3 w-2 h-2 bg-orange-300 rounded-full animate-ping opacity-50"
+    style="animation-delay: 1s;"></div>
+</div>
+
+<!-- Hero Section Mejorado -->
+<!-- Hero Section -->
+<section class="relative text-white py-40" style="background-image: url('https://scontent.fjul2-1.fna.fbcdn.net/v/t1.6435-9/87561846_2740608172653838_6965642479651520512_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=3a1ebe&_nc_eui2=AeHJsLxD7JG1NcYr5ujJ5ofECXy5iX8GWPkJfLmJfwZY-ftA105AaOnUWvwVlo_T-nKU-nVIGFqFaSNrko_52x3G&_nc_ohc=sfQULSFpJ9gQ7kNvwHDEkc-&_nc_oc=AdlShUb-XqdLY8Pr83SGGdnogJXcmdUs-SEx92NlVfL63Vm66dub-bXWsrccGmY5Vg3ESsRMcjhByLDbkN5yUjI0&_nc_zt=23&_nc_ht=scontent.fjul2-1.fna&_nc_gid=PDYJBIQUNAbiTm-7F85Zhg&oh=00_AfNk0pXsFWa9ObHwH4pncz4WtS2DmQZ-ZukrWuHUG_Miow&oe=687A4BCE'); 
+background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.9;">
+  <div class="absolute inset-0 bg-black/40"></div>
+  <div class="relative container mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+      Eventos Locales
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+      Descubre los micronegocios que impulsan el turismo en Capachica
+    </p>
+  </div>
+</section>
+<!-- calendario -->
+<div class=" top-24 z-40 px-4 pb-8 dark:bg-gray-800">
+  <div class="bg-white/10 dark:bg-gray-800 backdrop-blur-xl  rounded-2xl p-4 shadow-2xl">
+    <div class="flex flex-wrap gap-4 items-center justify-center">
+
+      <!-- Botón calendario mejorado -->
+      <button type="button"
+        class="calendar-btn-main"
+        (click)="mostrarModalCalendario = true">
+        <i class="fas fa-calendar-days icon"></i>
+        Ver Calendario
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Diseño Principal Mejorado */
+.calendar-btn-main {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 53, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.calendar-btn-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+.calendar-btn-main:hover::before {
+    left: 100%;
+}
+.calendar-btn-main:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 12px 35px rgba(255, 107, 53, 0.4),
+        0 8px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #ff7849, #ff9500);
+}
+.calendar-btn-main:active {
+    transform: translateY(-1px) scale(0.98);
+}
+.calendar-btn-main .icon {
+    margin-right: 12px;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+.calendar-btn-main:hover .icon {
+    transform: scale(1.1) rotate(5deg);
+}
+</style>
+
+<div class="dark:bg-gray-800">
+<!-- MODAL DE CALENDARIO FUTURISTA -->
+<!-- MODAL CALENDARIO MINIMALISTA -->
+<div *ngIf="mostrarModalCalendario"
+  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 pt-20 transition-all duration-300">
+
+  <div
+    class="relative w-full max-w-2xl bg-white dark:bg-[#1f1f1f] rounded-[2rem] shadow-xl border border-gray-200 dark:border-gray-700 transition-transform duration-500 scale-100">
+
+    <!-- Contenido del modal -->
+    <div class="relative px-6 py-8 space-y-6">
+      <!-- Encabezado -->
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+          📅 Calendario de Eventos
+        </h2>
+
+        <!-- Botón cerrar -->
+        <button (click)="openCalendar()"
+          class="group p-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-red-100 dark:hover:bg-red-800/30 transition-all duration-300">
+          <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-red-500 transition-transform duration-300 group-hover:rotate-90"
+            fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 11-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 11-1.414-1.414L8.586 10l-4.95-4.95a1 1 0 011.414-1.414L10 8.586z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Línea decorativa -->
+      <div class="border-gray-200 dark:border-gray-600 pb-2"></div>
+
+      <!-- Calendario -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+        <mwl-calendar-month-view 
+          [viewDate]="viewDate"
+          [events]="calendarEvents"
+          [cellTemplate]="cellTemplate"
+          [headerTemplate]="headerTemplate"
+          class="rounded-xl overflow-hidden dark:bg-gray-600 dark:text-white">
+        </mwl-calendar-month-view>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sobrescribir estilos internos -->
+<style>
+  ::ng-deep .mwl-calendar-month-view .cal-day:not(.cal-in-month) {
+  opacity: 0.4;
+  background-color: #2d3748 !important; /* Asegura fondo oscuro */
+}
+
+  ::ng-deep .mwl-calendar-month-view .cal-day {
+    background-color: #4a5568 !important; /* Día con fondo gris oscuro */
+    margin: 0 !important; /* Elimina márgenes debajo de los días */
+    padding: 10px !important; /* Ajusta el padding a tu preferencia */
+  }
+
+  ::ng-deep .mwl-calendar-month-view .cal-day.cal-today {
+    background-color: #ed8936 !important; /* Día actual con fondo anaranjado */
+    color: rgb(0, 0, 0) !important;
+  }
+
+  ::ng-deep .mwl-calendar-month-view .cal-day:hover {
+    background-color: #718096 !important; /* Hover en los días */
+  }
+
+  ::ng-deep .mwl-calendar-month-view .cal-header {
+    background-color: #2d3748 !important; /* Cabecera con fondo gris oscuro */
+    color: rgb(0, 0, 0) !important;
+    padding: 8px !important; /* Ajuste del padding */
+  }
+
+  /* Asegúrate de que el contenedor de los días tenga un estilo uniforme */
+  ::ng-deep .mwl-calendar-month-view .cal-day .cal-date {
+    background-color: #2d3748 !important; /* Cabecera con fondo gris oscuro */
+    color: rgb(0, 0, 0) !important;
+    padding: 0 !important;
+  }
+</style>
+
+
+<!-- Encabezado de días -->
+<ng-template #headerTemplate let-days="days">
+  <div class="grid grid-cols-7 text-center font-semibold text-orange-700 dark:text-yellow-300  dark:bg-gray-800 text-sm py-2 border-b border-gray-200 dark:border-gray-600">
+    <div *ngFor="let day of days" class="uppercase tracking-wider">
+      {{ day.date | date: 'EEE' }}
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #cellTemplate let-day="day">
+  <div
+    class="h-14 w-full flex flex-col items-center  dark:bg-gray-800 justify-center text-sm transition-all duration-200 group cursor-pointer"
+    [ngClass]="{
+      'bg-orange-500 text-white  dark:bg-gray-800  font-bold shadow-lg': day.isToday,
+      'bg-white dark:bg-gray-800 hover:bg-orange-100 dark:hover:bg-orange-700 text-gray-800 dark:text-gray-200': !day.isToday,
+      'opacity-40': !day.inMonth
+    }">
+
+    <!-- Día -->
+    <span>{{ day.date | date: 'd' }}</span>
+
+    <!-- Eventos -->
+    <div *ngIf="day.events?.length" class="flex gap-1 mt-1">
+      <ng-container *ngFor="let event of day.events">
+        <div class="relative group">
+          <div class="w-2.5 h-2.5 rounded-full"
+            [ngStyle]="{ backgroundColor: event.color?.primary }"></div>
+          <div
+            class="absolute bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+            {{ event.title }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Templates del calendario -->
+<ng-template #cellTemplate let-day="day">
+  <div
+    class="h-5 w-full flex flex-col dark:bg-black items-center justify-center text-sm rounded-lg transition-all duration-200 group cursor-pointer"
+    [ngClass]="{
+      'bg-gradient-to-br from-orange-500 to-yellow-500 text-white font-bold shadow-lg': day.isToday,
+      'bg-white/50 dark:bg-gray-700/50 hover:bg-orange-100 dark:hover:bg-orange-800/30 text-gray-700 dark:text-gray-800': !day.isToday,
+      'opacity-40': !day.inMonth
+    }">
+    <span class="group-hover:scale-110 transition-transform duration-200">
+      {{ day.date | date: 'd' }}
+    </span>
+    <div *ngIf="day.events?.length" class="flex gap-1 mt-1">
+      <div class="w-1 h-1 bg-orange-400 rounded-full animate-pulse"></div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #headerTemplate let-date="date">
+  <div class="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-100 dark:border-gray-800">
+    <!-- Header principal con navegación -->
+    <div class="flex items-center justify-between px-6 py-4">
+      <!-- Botón anterior -->
+      <button (click)="anteriorMes()"
+        class="group flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300  hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200">
+        <svg class="w-4 h-4 transform group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span class="text-sm font-medium">Anterior</span>
+      </button>
+
+      <!-- Título del mes -->
+      <div class="text-center">
+        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+          {{ date | date: 'MMMM' | titlecase }}
+        </h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">
+          {{ date | date: 'yyyy' }}
+        </p>
+      </div>
+
+      <!-- Botón siguiente -->
+      <button (click)="siguienteMes()"
+        class="group flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-orange-600 dark:hover:text-orange-400 transition-all duration-200">
+        <span class="text-sm font-medium">Siguiente</span>
+        <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Sección de filtros -->
+    <div class="px-6 pb-4">
+      <div class="flex items-center gap-3 max-w-md">
+        <!-- Input de búsqueda/filtro -->
+        <div class="flex-1 relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input type="text" 
+            
+            placeholder="Buscar eventos..."
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-sm">
+        </div>
+
+        <!-- Botón Filtrar -->
+        <button 
+          class="px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium text-sm rounded-lg shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+            </svg>
+            <span>Filtrar</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<!-- Evento destacado con toda la información -->
+<!-- EVENTO MÁS CERCANO -->
+<section *ngIf="eventoCercano" class="px-6 py-12 bg-white dark:bg-gray-800">
+  <div class="max-w-6xl mx-auto pt-10">
+
+    <!-- Día destacado del evento -->
+    <div class="text-center mb-6">
+      <p class="text-6xl font-extrabold text-amber-700 dark:text-amber-300 leading-none">
+        {{ eventoCercano.fecha_inicio | date: 'd' }}
+      </p>
+      <p class="text-2xl font-semibold text-black dark:text-white uppercase tracking-wider">
+        {{ eventoCercano.fecha_inicio | date: 'MMMM y' }}
+      </p>
+    </div>
+
+    <!-- Línea decorativa debajo de la fecha -->
+    <div class="border-t border-gray-300 dark:border-gray-700 mb-10"></div>
+
+    <!-- Contenido principal -->
+    <div class="flex flex-col lg:flex-row gap-10 items-start">
+      <!-- Imagen -->
+      <div class="flex-shrink-0 w-full lg:w-1/2">
+        <img [src]="eventoCercano.sliders[0].url_completa"
+          class="w-full h-[300px] rounded-2xl object-cover shadow-lg border border-gray-300 dark:border-gray-600"
+          alt="Imagen del evento" />
+      </div>
+
+      <!-- Detalles Mejorados -->
+      <div class="flex-1 space-y-8 text-gray-800 dark:text-gray-200 text-lg">
+
+        <!-- Título centrado y grande -->
+        <h2 class="text-4xl font-extrabold text-center text-gray-900 dark:text-white tracking-tight">
+          {{ eventoCercano.nombre }}
+        </h2>
+
+        
+
+        <!-- Descripción -->
+        <p class="italic text-base text-justify text-gray-900 dark:text-white dark:text-orange-300">
+          {{ eventoCercano.descripcion }}
+        </p>
+
+        <!-- Horas y Botón en la misma línea -->
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+          <!-- Fechas con icono -->
+          <div class="flex items-center gap-4 text-orange-600 dark:text-orange-400 text-lg">
+            <!-- Hora Inicio -->
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-600 dark:text-orange-400   flex-shrink-0" fill="none" stroke="currentColor"
+                stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l3 3" />
+              </svg>
+              <div class="text-gray-900 dark:text-white ">
+                <span><strong></strong> {{ eventoCercano.hora_inicio }}</span>
+              </div>
+              
+            </div>
+
+            <!-- Hora Fin -->
+            <div class="flex items-center gap-2">
+              <div class="text-gray-900 dark:text-white ">
+                <span><strong></strong>-   {{ eventoCercano.hora_fin }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón con ícono circular -->
+          <a [routerLink]="['/eventos/eventosdetalle', eventoCercano.id]"
+            class="group relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <svg class="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor"
+              viewBox="0 0 32 32">
+              <path
+                d="M25.468,14.508l-20.967,-0.008c-0.828,-0 -1.501,0.672 -1.501,1.499c-0,0.828 0.672,1.501 1.499,1.501l21.125,0.009c-0.107,0.159 -0.234,0.306 -0.377,0.439c-3.787,3.502 -9.68,8.951 -9.68,8.951c-0.608,0.562 -0.645,1.511 -0.083,2.119c0.562,0.608 1.512,0.645 2.12,0.083c-0,0 5.892,-5.448 9.68,-8.95c1.112,-1.029 1.751,-2.47 1.766,-3.985c0.014,-1.515 -0.596,-2.968 -1.688,-4.018l-9.591,-9.221c-0.596,-0.574 -1.547,-0.556 -2.121,0.041c-0.573,0.597 -0.555,1.547 0.042,2.121l9.591,9.221c0.065,0.063 0.127,0.129 0.185,0.198Z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="mb-8 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
+  <!-- Header de filtros -->
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Filtros de búsqueda</h3>
+    </div>
+    
+    <!-- Botón limpiar todos los filtros -->
+    <button 
+      class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      <span>Limpiar todo</span>
+    </button>
+  </div>
+
+  <!-- Filtro por nombre -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Buscar evento
+    </label>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <input [(ngModel)]="filtroNombre" 
+   
+        placeholder="Buscar por nombre del evento..."
+        class="w-full pl-12 pr-10 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-sm">
+      
+      <!-- Botón limpiar búsqueda -->
+      <button *ngIf="filtroNombre" 
+
+        class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros por fecha y tipo -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+
+    <!-- Tipo de evento -->
+    <div class="space-y-2">
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Tipo de evento
+      </label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+        </div>
+        <select [(ngModel)]="filtroTipo"
+        
+          class="w-full pl-12 pr-10 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-sm appearance-none cursor-pointer">
+          <option value="">Todos los tipos</option>
+          <option *ngFor="let tipo of tiposEventosUnicos" [value]="tipo">{{ tipo }}</option>
+        </select>
+        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
+    <!-- Contador de resultados -->
+    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+      </svg>
+      <span>{{ eventosFiltrados.length }} evento(s) encontrado(s)</span>
+    </div>
+
+    <!-- Botón aplicar filtros -->
+    <button 
+      class="calendar-btn-main">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+      </svg>
+      <span>Aplicar filtros</span>
+    </button>
+  </div>
+
+  <!-- Filtros activos -->
+  <div  class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+    <div class="flex flex-wrap gap-2">
+      <span class="text-sm text-gray-600 dark:text-gray-400 font-medium">Filtros activos:</span>
+      
+      <!-- Filtro por nombre -->
+      <div *ngIf="filtroNombre" class="flex items-center gap-1 px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 rounded-full text-sm">
+        <span>Nombre: "{{ filtroNombre }}"</span>
+        <button class="ml-1 hover:text-orange-900 dark:hover:text-orange-100">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filtro por fecha inicio -->
+      <div *ngIf="filtroFechaInicio" class="flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+        <span>Desde: {{ filtroFechaInicio | date:'dd/MM/yyyy' }}</span>
+        <button class="ml-1 hover:text-blue-900 dark:hover:text-blue-100">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filtro por fecha fin -->
+      <div *ngIf="filtroFechaFin" class="flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm">
+        <span>Hasta: {{ filtroFechaFin | date:'dd/MM/yyyy' }}</span>
+        <button class="ml-1 hover:text-green-900 dark:hover:text-green-100">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filtro por tipo -->
+      <div *ngIf="filtroTipo" class="flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 rounded-full text-sm">
+        <span>Tipo: {{ filtroTipo }}</span>
+        <button class="ml-1 hover:text-purple-900 dark:hover:text-purple-100">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Listado de eventos filtrados -->
+ <div class="max-w-7xl mx-auto p-6">
+    <h2 class="text-4xl font-bold mb-8 text-center text-orange-700 dark:text-orange-300">Eventos Disponibles</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
+  <div *ngFor="let evento of eventosFiltrados" class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <!-- Contenido de cada evento -->
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-[1.02] bg-white dark:bg-gray-900">
+      
+      <!-- Imagen con overlay -->
+      <div class="relative h-[420px] group">
+        <!-- Fondo imagen con zoom -->
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+          [style.backgroundImage]="'url(' + evento.sliders[0].url_completa + ')'"></div>
+
+        <!-- Degradado oscuro -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+
+        <!-- Fecha destacada arriba a la izquierda -->
+        <div class="absolute top-4 left-4 bg-white dark:bg-gray-800 text-center rounded-md shadow-lg px-2 py-1">
+          <p class="text-lg font-bold text-gray-800 dark:text-white">{{ evento.fecha_inicio | date:'dd' }}</p>
+          <p class="text-xs uppercase text-gray-500 dark:text-gray-300">{{ evento.fecha_fin | date:'MMM' }}</p>
+        </div>
+
+        <!-- Contenido dentro de la imagen -->
+        <div class="absolute bottom-0 p-5 text-white w-full">
+          <h3 class="text-2xl font-bold mb-1">{{ evento.nombre }}</h3>
+
+          <!-- Fecha con ícono -->
+          <div class="flex items-center text-sm text-gray-300 gap-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>{{ evento.fecha_inicio | date:'MMM d, y' }} — {{ evento.hora_inicio }}</span>
+          </div>
+
+          <!-- Botón circular con ícono -->
+          <div class="flex justify-end">
+            <a [routerLink]="['/eventos/eventosdetalle', evento.id]"
+              class="border-2 hover:bg-gray-400 text-white rounded-full p-3 transition-shadow shadow-md hover:shadow-lg">
+              <svg fill="currentColor" viewBox="0 0 32 32" class="w-5 h-5">
+                <path
+                  d="M25.468,14.508l-20.967,-0.008c-0.828,-0 -1.501,0.672 -1.501,1.499c-0,0.828 0.672,1.501 1.499,1.501l21.125,0.009c-0.107,0.159 -0.234,0.306 -0.377,0.439c-3.787,3.502 -9.68,8.951 -9.68,8.951c-0.608,0.562 -0.645,1.511 -0.083,2.119c0.562,0.608 1.512,0.645 2.12,0.083c-0,0 5.892,-5.448 9.68,-8.95c1.112,-1.029 1.751,-2.47 1.766,-3.985c0.014,-1.515 -0.596,-2.968 -1.688,-4.018l-9.591,-9.221c-0.596,-0.574 -1.547,-0.556 -2.121,0.041c-0.573,0.597 -0.555,1.547 0.042,2.121l9.591,9.221c0.065,0.063 0.127,0.129 0.185,0.198Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <!-- <div *ngIf="eventosFiltrados.length === 0" class="col-span-full text-center py-12">
+    <p class="text-gray-500 dark:text-gray-400 text-lg">No se encontraron eventos con los filtros seleccionados</p>
+  </div>-->
+</div>
+
+</div>
+
+

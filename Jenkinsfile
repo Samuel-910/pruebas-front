@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     tools {
-        // El “Name” que diste en Jenkins Admin → Tools → NodeJS
         nodejs 'NodeJS_24'
     }
 
@@ -11,8 +10,8 @@ pipeline {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     git branch: 'main',
-                        credentialsId: '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',
-                        url: 'https://github.com/Samuel-910/pruebas-front.git'
+                        credentialsId: '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',
+                        url: 'https://github.com/Samuel-910/pruebas.git'
                 }
             }
         }
@@ -20,7 +19,7 @@ pipeline {
         // A partir de aquí, entramos en capachica-app
         stage('Install dependencies') {
             steps {
-                dir('capachica-app') {
+                dir('turismo-frontend') {
                     sh 'npm install'
                 }
             }
@@ -28,7 +27,7 @@ pipeline {
 
 		stage('Unit tests + Coverage') {
 		  steps {
-			dir('capachica-app') {
+			dir('turismo-frontend') {
 			  sh 'npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage'
 			}
 		  }
@@ -37,7 +36,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('capachica-app') {
+                dir('turismo-frontend') {
 				
                     sh 'npm run build'
                 }
@@ -46,7 +45,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                dir('capachica-app') {
+                dir('turismo-frontend') {
 						withSonarQubeEnv('sonarqube') {
 							sh 'npx sonar-scanner'
 						}
