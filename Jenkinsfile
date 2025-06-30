@@ -28,35 +28,41 @@ pipeline {
 		stage('Unit tests + Coverage') {
 		  steps {
 			dir('turismo-frontend') {
+			      timeout(time: 20, unit: 'MINUTES') {
 			  sh 'npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage'
+			  }
 			}
 		  }
 		}
 
 
-        stage('Build') {
-            steps {
-                dir('turismo-frontend') {
-				
-                    sh 'npm run build'
-                }
+stage('Build') {
+    steps {
+        dir('turismo-frontend') {
+            timeout(time: 10, unit: 'MINUTES') {  // Establece un límite de 30 minutos
+                sh 'npm run build'
             }
         }
+    }
+}
 
-        stage('SonarQube Analysis') {
-            steps {
-                dir('turismo-frontend') {
-						withSonarQubeEnv('sonarqube') {
-							sh 'npx sonar-scanner'
-						}
-					
-                }
-            }
+
+stage('SonarQube Analysis') {
+  steps {
+    dir('turismo-frontend') {
+      timeout(time: 20, unit: 'MINUTES') {  // Establece un límite de 20 minutos
+        withSonarQubeEnv('sonarqube') {
+          sh 'npx sonar-scanner'
         }
+      }
+    }
+  }
+}
+
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 10, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
